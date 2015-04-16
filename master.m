@@ -158,6 +158,11 @@ test_set = pyramid_all(test_idx, :);
 if (strcmp(params.kernel, 'histogram_kernel'))
     training_set = [(1:training_size)' K(training_idx, training_idx)];
     test_set = [(1:test_size)' K(test_idx, training_idx)];
+elseif (strcmp(params.kernel, 'linear_kernel'))
+    training_set = sparse(training_set);
+    test_set = sparse(test_set);
+else
+    error('Missing/invalid kernel specification params.kernel');
 end
 
 disp('Done.');
@@ -167,11 +172,21 @@ disp('Training SVM...');
 svm_options = '';
 if (strcmp(params.kernel, 'histogram_kernel'))
     svm_options = '-t 4';
+    model = svmtrain(training_labels, training_set, svm_options);
+elseif (strcmp(params.kernel, 'linear_kernel'))
+    model = train(training_labels, training_set, svm_options);
+else
+    error('Missing/invalid kernel specification params.kernel');
 end
-model = svmtrain(training_labels, training_set, svm_options);
 disp('Done.');
 
 % SVM prediction
 disp('Classifying using learned SVM...');
-predictions = svmpredict(test_labels, test_set, model, '');
+if (strcmp(params.kernel, 'histogram_kernel'))
+    predictions = svmpredict(test_labels, test_set, model, '');
+elseif (strcmp(params.kernel, 'linear_kernel'))
+    predictions = predict(test_labels, test_set, model, '');
+else
+    error('Missing/invalid kernel specification params.kernel');
+end
 disp('Done.');
