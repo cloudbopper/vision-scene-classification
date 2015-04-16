@@ -1,4 +1,4 @@
-function [ ] = encode( imageFileList, dataBaseDir, featureSuffix, params, canSkip, pfig )
+function [ ] = encode_llc( imageFileList, dataBaseDir, featureSuffix, params, canSkip, pfig )
 % find texton labels of patches
 
 % load dictionary
@@ -9,15 +9,10 @@ fprintf('Loaded dictionary: %d codewords\n', params.dictionarySize);
 % compute codes of features
 for f = 1:length(imageFileList)
 
+    % load image
     imageFName = imageFileList{f};
     [dirN base] = fileparts(imageFName);
     baseFName = fullfile(dirN, base);
-
-    % input SIFT features
-    inFName = fullfile(dataBaseDir, sprintf('%s%s', baseFName, featureSuffix));
-    load(inFName, 'features');
-    ndata = size(features.data,1);
-    fprintf('Loaded %s, %d descriptors\n', inFName, ndata);
 
     % progress bar
     if(mod(f,100)==0 && exist('pfig','var'))
@@ -27,9 +22,15 @@ for f = 1:length(imageFileList)
     % output encoding file
     outFName = fullfile(dataBaseDir, sprintf('%s_encoding_%d.mat', baseFName, params.dictionarySize));
     if(exist(outFName,'file')~=0 && canSkip)
-        fprintf('Found %s, skipping\n', imageFName);
+        % fprintf('Found %s, skipping\n', imageFName);
         continue;
     end
+
+    % input SIFT features
+    inFName = fullfile(dataBaseDir, sprintf('%s%s', baseFName, featureSuffix));
+    load(inFName, 'features');
+    ndata = size(features.data,1);
+    % fprintf('Loaded %s, %d descriptors\n', inFName, ndata);
 
     % compute encoding
     encoding.data = zeros(ndata, params.dictionarySize);
@@ -62,8 +63,8 @@ for f = 1:length(imageFileList)
         ci = ci_hat /sum(ci_hat);
 
         % plug into encoding matrix
-        encoding.data(i, idx) = ci;
-        encoding.idx = idx;
+        encoding.data(i,idx) = ci';
+        encoding.idx(i,:) = idx;
     end
 
     % save encoding
