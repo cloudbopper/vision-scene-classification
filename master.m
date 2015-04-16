@@ -84,7 +84,7 @@ if (size(dir(K_fname),1) ~= 0 && canSkip)
     load(K_fname);
 else
     K = hist_isect(pyramid_all, pyramid_all);
-    save(K_fname, K);
+    save(K_fname, 'K');
 end
 
 % for faster performance, compile and use hist_isect_c:
