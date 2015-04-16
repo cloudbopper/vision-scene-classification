@@ -133,9 +133,9 @@ end
 training_set = pyramid_all(training_idx, :);
 test_set = pyramid_all(test_idx, :);
 
-if (strcmp(params.kernel, 'histogram_kernel') == 0)
-    training_set = [training_idx K(training_idx, training_idx)];
-    test_set = [test_idx K(test_idx, training_idx)];
+if (strcmp(params.kernel, 'histogram_kernel'))
+    training_set = [(1:training_size)' K(training_idx, training_idx)];
+    test_set = [(1:test_size)' K(test_idx, training_idx)];
 end
 
 disp('Done.');
@@ -143,7 +143,7 @@ disp('Done.');
 % SVM training
 disp('Training SVM...');
 svm_options = '';
-if (strcmp(params.kernel, 'histogram_kernel') == 0)
+if (strcmp(params.kernel, 'histogram_kernel'))
     svm_options = '-t 4';
 end
 model = svmtrain(training_labels, training_set, svm_options);
