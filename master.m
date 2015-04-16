@@ -18,6 +18,7 @@ params.gridSpacing = 8;
 params.patchSize = 16;
 params.dictionarySize = 200;
 params.numTextonImagesPerClass = 10;
+params.k = 5; % number of nearest neighbors
 params.pyramidLevels = 3;
 params.oldSift = false;
 params.trainingSizePerClass = 100;
