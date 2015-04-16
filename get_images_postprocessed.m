@@ -10,8 +10,8 @@ all_images = containers.Map();
 
 for i = 1:numel(fnames)
     fname = fnames(i).name;
-    parts = strsplit(fname, '_');
-    class = parts{1};
+    [idx_start, idx_end] = regexp(fname, '^[a-zA-Z]+_');
+    class = fname(idx_start:idx_end-1);
     if isKey(all_images, class)
         ll = all_images(class);
         ll{end + 1} = fname;

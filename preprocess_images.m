@@ -1,5 +1,7 @@
 % preprocess images into format digestible by SpatialPyramid code
 
+disp('Preprocessing images...');
+
 source_dir = 'data/scene_categories/';
 image_dir = 'data/images';
 data_dir = 'data/data';
@@ -23,3 +25,5 @@ for i = 1:num_classes
         copyfile(source_image_file, dest_image_file);
     end
 end
+
+disp('Done.');

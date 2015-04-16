@@ -26,6 +26,10 @@ canSkip = 1;
 saveSift = 1;
 pfig = sp_progress_bar('Generating SIFT Features');
 
+if (~exist(image_dir, 'dir'))
+    preprocess_images();
+end
+
 % hash from class to image filenames
 disp('Retrieving image mapping...');
 all_images = get_images_postprocessed(image_dir);
