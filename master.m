@@ -22,6 +22,7 @@ params.pyramidLevels = 3;
 params.oldSift = false;
 params.trainingSizePerClass = 100;
 params.kernel = 'histogram_kernel';
+params.method = 'baseline';
 canSkip = 1;
 saveSift = 1;
 pfig = sp_progress_bar('Generating SIFT Features');
@@ -66,15 +67,17 @@ disp('Building dictionary...');
 calculate_dictionary_kmeans(image_dir, data_dir, training_data, '_sift.mat', params, canSkip, pfig);
 disp('Done.');
 
-% Build histogram
-disp('Building histogram...');
-BuildHistograms(imageFileList,image_dir, data_dir, '_sift.mat', params, canSkip, pfig);
-disp('Done.');
+if (strcmp(params.method, 'baseline'))
+    % Build histogram
+    disp('Building histogram...');
+    BuildHistograms(imageFileList,image_dir, data_dir, '_sift.mat', params, canSkip, pfig);
+    disp('Done.');
 
-% Compile pyramids
-disp('Compiling pyramids...');
-pyramid_all = CompilePyramid(imageFileList, data_dir, sprintf('_texton_ind_%d.mat', params.dictionarySize), params, canSkip, pfig);
-disp('Done.');
+    % Compile pyramids
+    disp('Compiling pyramids...');
+    pyramid_all = CompilePyramid(imageFileList, data_dir, sprintf('_texton_ind_%d.mat', params.dictionarySize), params, canSkip, pfig);
+    disp('Done.');
+end
 
 % compute histogram intersection kernel
 disp('Computing histogram intersection kernel...');

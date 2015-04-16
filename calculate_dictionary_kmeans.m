@@ -1,4 +1,4 @@
-function [ ] = calculate_dictionary_kmeans2( image_dir, data_dir, training_data, featureSuffix, params, canSkip, pfig )
+function [ ] = calculate_dictionary_kmeans( image_dir, data_dir, training_data, featureSuffix, params, canSkip, pfig )
 % calculates dictionary using k-means over subset of training data
 % assumes SIFT descriptors have been computed
 
