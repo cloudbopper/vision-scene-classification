@@ -1,7 +1,5 @@
-function [ output_args ] = CodeBookOptimization( imageFileList, dataBaseDir, featureSuffix, params )%, lambda, sigma )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-
+function [ output_args ] = CodeBookOptimization( imageFileList, dataBaseDir, featureSuffix, params, lambda, sigma )
+%On-line learning method for codebook optimization
 
 %Load dictionary from K-means
 inFName = fullfile(dataBaseDir, sprintf('dictionary_%d.mat', params.dictionarySize));
@@ -23,19 +21,35 @@ for f = 1:length(imageFileList)
     % load sift descriptors
     load(inFName, 'features');
     
+    % N x D SIFT features matrix for current image
     Xi = features.data;
-    N = size(features.data,1);
+    N = size(features.data, 1);
     for i = 1:N
+        %% Locality constraint parameter
+        
         %Computing distance from all code words
         dist = sp_dist2(Xi(i, :), B);
+        %Calculating dj's
         dist_sigma = dist./sigma;
         d_exp = exp(dist_sigma);
+        % 1 x M dj matrix
         d = normr(d_exp);
-        size(dist)
-%         for j = 1:M
-%             dist = sqrt() 
-%             %d(1, j) =  
-%         end
+        %Converting to M X 1 matrix
+        d = transpose(d);
+        
+        %% Coding
+        
+        
+        one = ones(M, 1);
+        %
+        ci_cap = (C + lambda * diag(d)) / one;
+        
+        %% Remove bias
+        
+        %% Update bias
+        
+        
+        
     end
 
 end
