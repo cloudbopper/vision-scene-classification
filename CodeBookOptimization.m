@@ -39,10 +39,13 @@ for f = 1:length(imageFileList)
         
         %% Coding
         
-        
-        one = ones(M, 1);
-        %
-        ci_cap = (C + lambda * diag(d)) / one;
+        one = ones(M, 1);  
+        Bi_1x = (B - one * Xi(i, :));
+        % compute data covariance matrix
+        Ci = Bi_1x * Bi_1x';
+        ci_cap = (Ci + lambda * diag(d)) / one;
+        ci = ci_cap \ one;
+        ci = ci / sum(ci);
         
         %% Remove bias
         
