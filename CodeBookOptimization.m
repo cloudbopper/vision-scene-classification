@@ -43,16 +43,28 @@ for f = 1:length(imageFileList)
         Bi_1x = (B - one * Xi(i, :));
         % compute data covariance matrix
         Ci = Bi_1x * Bi_1x';
-        ci_cap = (Ci + lambda * diag(d)) / one;
-        ci = ci_cap \ one;
-        ci = ci / sum(ci);
+        ci_cap = (Ci + lambda * diag(d)) \ one;
+        %Subject to constraint 
+        ci = ci_cap / sum(ci_cap);
         
         %% Remove bias
         
+        id = find(abs(ci) > 0.01);
+        Bi = B(id, :);
+        numIds = length(id);
+        one = ones(numIds, 1); 
+        Bi_1x = (Bi - one * Xi(i, :));
+        % compute data covariance matrix
+        Ci = Bi_1x * Bi_1x';
+        ci_cap = Ci \ one;
+        ci_cap = ci_cap / sum(ci_cap);
+        
         %% Update bias
-        
-        
-        
+        mu = sqrt(1 / i);
+        deltaBi = -2 * ci_cap * (Xi(i, :) - ci_cap' * Bi);
+        Bi = Bi - mu * deltaBi / norm(ci_cap);
+     
+        B(id, :) = Bi;
     end
 
 end
