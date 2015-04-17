@@ -12,6 +12,7 @@ fprintf('Loaded dictionary: %d codewords\n', params.dictionarySize);
 Binit = dictionary;
 M = size(Binit, 1);
 
+B = Binit;
 %Iterating over each image
 for f = 1:length(imageFileList)
     % input SIFT features
@@ -22,14 +23,20 @@ for f = 1:length(imageFileList)
     % load sift descriptors
     load(inFName, 'features');
     
-    X = features.data;
+    Xi = features.data;
     N = size(features.data,1);
-%     for i = 1:N
-%         d = zeros(1, M);
+    for i = 1:N
+        %Computing distance from all code words
+        dist = sp_dist2(Xi(i, :), B);
+        dist_sigma = dist./sigma;
+        d_exp = exp(dist_sigma);
+        d = normr(d_exp);
+        size(dist)
 %         for j = 1:M
-%             d(1, j) =  
+%             dist = sqrt() 
+%             %d(1, j) =  
 %         end
-%     end
+    end
 
 end
 
