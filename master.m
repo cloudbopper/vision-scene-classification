@@ -22,8 +22,10 @@ params.k = 5; % number of nearest neighbors
 params.pyramidLevels = 3;
 params.oldSift = false;
 params.trainingSizePerClass = 100;
-params.kernel = 'histogram_kernel';
-params.method = 'baseline';
+% params.kernel = 'histogram_kernel';
+params.kernel = 'linear_kernel';
+% params.method = 'baseline';
+params.method = 'llc';
 canSkip = 1;
 saveSift = 1;
 pfig = sp_progress_bar('Generating SIFT Features');
@@ -75,25 +77,37 @@ if (strcmp(params.method, 'baseline'))
     disp('Done.');
 
     % Compile pyramids
-    disp('Compiling pyramids...');
+    disp('Compiling pyramid...');
     pyramid_all = CompilePyramid(imageFileList, data_dir, sprintf('_texton_ind_%d.mat', params.dictionarySize), params, canSkip, pfig);
+    disp('Done.');
+elseif (strcmp(params.method, 'llc'))
+    % Compute LLC encoding
+    disp('Computing LLC encoding...');
+    encode_llc(imageFileList, data_dir, '_sift.mat', params, canSkip, pfig);
+    disp('Done.');
+
+    % Compile pyramids
+    disp('Compiling LLC pyramid...');
+    pyramid_all = compile_pyramid_llc(imageFileList, data_dir, sprintf('_encoding_%d.mat', params.dictionarySize), params, canSkip, pfig);
     disp('Done.');
 end
 
-% compute histogram intersection kernel
-disp('Computing histogram intersection kernel...');
-K_fname = fullfile(data_dir, 'histogram_intersection_kernel.mat');
-if (size(dir(K_fname),1) ~= 0 && canSkip)
-    fprintf('Found %s, skipping recomputation\n', K_fname);
-    load(K_fname);
-else
-    K = hist_isect(pyramid_all, pyramid_all);
-    save(K_fname, 'K');
-end
+if (strcmp(params.method, 'histogram_kernel'))
+    % compute histogram intersection kernel
+    disp('Computing histogram intersection kernel...');
+    K_fname = fullfile(data_dir, 'histogram_intersection_kernel.mat');
+    if (size(dir(K_fname),1) ~= 0 && canSkip)
+        fprintf('Found %s, skipping recomputation\n', K_fname);
+        load(K_fname);
+    else
+        K = hist_isect(pyramid_all, pyramid_all);
+        save(K_fname, 'K');
+    end
 
-% for faster performance, compile and use hist_isect_c:
-% K = hist_isect_c(pyramid_all, pyramid_all);
-disp('Done.');
+    % for faster performance, compile and use hist_isect_c:
+    % K = hist_isect_c(pyramid_all, pyramid_all);
+    disp('Done.');
+end
 
 % Organize training/test data
 disp('Organizing training/test data...');
@@ -144,6 +158,11 @@ test_set = pyramid_all(test_idx, :);
 if (strcmp(params.kernel, 'histogram_kernel'))
     training_set = [(1:training_size)' K(training_idx, training_idx)];
     test_set = [(1:test_size)' K(test_idx, training_idx)];
+elseif (strcmp(params.kernel, 'linear_kernel'))
+    training_set = sparse(training_set);
+    test_set = sparse(test_set);
+else
+    error('Missing/invalid kernel specification params.kernel');
 end
 
 disp('Done.');
@@ -153,11 +172,21 @@ disp('Training SVM...');
 svm_options = '';
 if (strcmp(params.kernel, 'histogram_kernel'))
     svm_options = '-t 4';
+    model = svmtrain(training_labels, training_set, svm_options);
+elseif (strcmp(params.kernel, 'linear_kernel'))
+    model = train(training_labels, training_set, svm_options);
+else
+    error('Missing/invalid kernel specification params.kernel');
 end
-model = svmtrain(training_labels, training_set, svm_options);
 disp('Done.');
 
 % SVM prediction
 disp('Classifying using learned SVM...');
-predictions = svmpredict(test_labels, test_set, model, '');
+if (strcmp(params.kernel, 'histogram_kernel'))
+    predictions = svmpredict(test_labels, test_set, model, '');
+elseif (strcmp(params.kernel, 'linear_kernel'))
+    predictions = predict(test_labels, test_set, model, '');
+else
+    error('Missing/invalid kernel specification params.kernel');
+end
 disp('Done.');
