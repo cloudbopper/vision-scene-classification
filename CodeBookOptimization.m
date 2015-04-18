@@ -1,5 +1,14 @@
-function [ output_args ] = CodeBookOptimization( imageFileList, dataBaseDir, featureSuffix, params, lambda, sigma )
-%On-line learning method for codebook optimization
+function [ B ] = CodeBookOptimization( imageFileList, dataBaseDir, featureSuffix, params, lambda, sigma )
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%CodeBookOptimization: On-line learning method for codebook optimization
+%                       (Algorithm 4.1 from Wang et. al)
+%   Argument: 
+%       imageFileList, dataBaseDir, featureSuffix, params - for SIFT
+%       feature extraction
+%   Return value:
+%       B - Updated dictionary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Load dictionary from K-means
 inFName = fullfile(dataBaseDir, sprintf('dictionary_%d.mat', params.dictionarySize));
@@ -67,5 +76,9 @@ for f = 1:length(imageFileList)
         B(id, :) = Bi;
     end
 
+    %Saving updated dictionary to a file
+    outFName = fullfile(data_dir, sprintf('dictionary_%d_llc.mat', params.dictionarySize));
+    save(outFName, 'B');
+    
 end
 
