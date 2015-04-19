@@ -16,7 +16,7 @@ image_dir = fullfile(parent_dir, 'images');
 params.maxImageSize = 1000;
 params.gridSpacing = 8;
 params.patchSize = 16;
-params.dictionarySize = 200;
+params.dictionarySize = 1024;
 params.numTextonImagesPerClass = 10;
 params.k = 5; % number of nearest neighbors
 params.pyramidLevels = 3;
@@ -158,23 +158,19 @@ test_set = pyramid_all(test_idx, :);
 if (strcmp(params.kernel, 'histogram_kernel'))
     training_set = [(1:training_size)' K(training_idx, training_idx)];
     test_set = [(1:test_size)' K(test_idx, training_idx)];
-elseif (strcmp(params.kernel, 'linear_kernel'))
-    training_set = sparse(training_set);
-    test_set = sparse(test_set);
-else
-    error('Missing/invalid kernel specification params.kernel');
 end
 
 disp('Done.');
 
 % SVM training
 disp('Training SVM...');
-svm_options = '';
 if (strcmp(params.kernel, 'histogram_kernel'))
-    svm_options = '-t 4';
-    model = svmtrain(training_labels, training_set, svm_options);
+    model_svm = svmtrain(training_labels, training_set, '-t 4');
+    % save(sprintf('svm_model_%s_%d_%d_%d.mat', params.kernel, ...
+    %    params.dictionarySize, params.pyramidLevels, params.k), 'model_svm', 'params');
 elseif (strcmp(params.kernel, 'linear_kernel'))
-    model = train(training_labels, training_set, svm_options);
+    model_libl = train(training_labels, sparse(training_set), '');
+    model_svm = svmtrain(training_labels, training_set, '-t 0');
 else
     error('Missing/invalid kernel specification params.kernel');
 end
@@ -183,9 +179,12 @@ disp('Done.');
 % SVM prediction
 disp('Classifying using learned SVM...');
 if (strcmp(params.kernel, 'histogram_kernel'))
-    predictions = svmpredict(test_labels, test_set, model, '');
+    [predictions_svm, accuracy_svm, prob_estimates_svm] = svmpredict(test_labels, test_set, model_svm, '');
 elseif (strcmp(params.kernel, 'linear_kernel'))
-    predictions = predict(test_labels, test_set, model, '');
+    disp('Using liblinear:');
+    [predictions_libl, accuracy_libl, prob_estimates_libl] = predict(test_labels, sparse(test_set), model_libl, '');
+    disp('Using libsvm:');
+    [predictions_svm, accuracy_svm, prob_estimates_svm] = svmpredict(test_labels, test_set, model_svm, '');
 else
     error('Missing/invalid kernel specification params.kernel');
 end

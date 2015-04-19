@@ -89,7 +89,7 @@ for f = 1:length(imageFileList)
 end
 
 outFName = fullfile(dataBaseDir, sprintf('pyramids_all_%d_%d.mat', params.dictionarySize, params.pyramidLevels));
-%save(outFName, 'pyramid_all');
+save(outFName, 'pyramid_all');
 
 
 end
