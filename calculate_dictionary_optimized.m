@@ -1,4 +1,4 @@
-function [ ] = calculate_dictionary_optimized(data_dir, training_data, featureSuffix, params, canSkip, pfig )
+function [ ] = calculate_dictionary_optimized(data_dir, training_data, featureSuffix, params, canSkip, pfig)
 % calculates optimized dictionary
 % assumes k-means dictionary already exists (for initialization)
 
@@ -25,6 +25,6 @@ for i = 1:num_classes
 end
 
 % Obtaining new dictionary
-CodeBookOptimization( imageFileList, data_dir, featureSuffix, params );
+CodeBookOptimization( imageFileList, data_dir, featureSuffix, params, pfig);
 
 end
