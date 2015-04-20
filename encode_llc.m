@@ -2,9 +2,15 @@ function [ ] = encode_llc( imageFileList, dataBaseDir, featureSuffix, params, ca
 % find texton labels of patches
 
 % load dictionary
-inFName = fullfile(dataBaseDir, sprintf('dictionary_%d.mat', params.dictionarySize));
-load(inFName,'dictionary');
-fprintf('Loaded dictionary: %d codewords\n', params.dictionarySize);
+if (strcmp(params.dictOpt, 'yes'))
+    inFName = fullfile(dataBaseDir, sprintf('dictionary_%d_llc.mat', params.dictionarySize));
+    load(inFName,'dictionary');
+    fprintf('Loaded optimized texton dictionary: %d textons\n', params.dictionarySize);
+else
+    inFName = fullfile(dataBaseDir, sprintf('dictionary_%d.mat', params.dictionarySize));
+    load(inFName,'dictionary');
+    fprintf('Loaded dictionary: %d codewords\n', params.dictionarySize);
+end
 
 % compute codes of features
 for f = 1:length(imageFileList)
