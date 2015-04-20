@@ -29,7 +29,7 @@ params.method = 'llc';
 % params.dictionaryType = 'k-means';
 params.dictionaryType = 'optimized';
 params.lambda = 1;
-params.sigma = 1;
+params.sigma = 10;
 canSkip = 1;
 saveSift = 1;
 pfig = sp_progress_bar('Generating SIFT Features');
@@ -99,7 +99,7 @@ elseif (strcmp(params.method, 'llc'))
 
     % Compile pyramids
     disp('Compiling LLC pyramid...');
-    pyramid_all = compile_pyramid_llc(imageFileList, data_dir, sprintf('_encoding_%d.mat', params.dictionarySize), params, canSkip, pfig);
+    pyramid_all = compile_pyramid_llc(imageFileList, data_dir, sprintf('_encoding_%d_%s.mat', params.dictionarySize, params.dictionaryType), params, canSkip, pfig);
     disp('Done.');
 end
 

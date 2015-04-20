@@ -26,7 +26,7 @@ for f = 1:length(imageFileList)
     end
 
     % output encoding file
-    outFName = fullfile(dataBaseDir, sprintf('%s_encoding_%d.mat', baseFName, params.dictionarySize));
+    outFName = fullfile(dataBaseDir, sprintf('%s_encoding_%d_%s.mat', baseFName, params.dictionarySize, params.dictionaryType));
     if(exist(outFName,'file')~=0 && canSkip)
         % fprintf('Found %s, skipping\n', imageFName);
         continue;

@@ -21,7 +21,7 @@ for f = 1:length(imageFileList)
     end
 
     % output pyramid
-    outFName = fullfile(dataBaseDir, sprintf('%s_pyramid_llc_%d_%d.mat', baseFName, params.dictionarySize, params.pyramidLevels));
+    outFName = fullfile(dataBaseDir, sprintf('%s_pyramid_llc_%d_%d_%s.mat', baseFName, params.dictionarySize, params.pyramidLevels, params.dictionaryType));
     if(size(dir(outFName),1)~=0 && canSkip)
         % fprintf('Found %s, skipping\n', imageFName);
         load(outFName, 'pyramid');
@@ -88,7 +88,7 @@ for f = 1:length(imageFileList)
 
 end
 
-outFName = fullfile(dataBaseDir, sprintf('pyramids_all_%d_%d.mat', params.dictionarySize, params.pyramidLevels));
+outFName = fullfile(dataBaseDir, sprintf('pyramids_all_%d_%d_%s.mat', params.dictionarySize, params.pyramidLevels, params.dictionaryType));
 save(outFName, 'pyramid_all');
 
 
