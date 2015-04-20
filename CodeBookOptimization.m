@@ -87,10 +87,10 @@ for f = 1:L
      
         B(id, :) = Bi;
     end
-
-    %Saving updated dictionary to a file
-    outFName = fullfile(data_dir, sprintf('dictionary_%d_llc.mat', params.dictionarySize));
-    save(outFName, 'B');
-    
 end
 
+%Saving updated dictionary to a file
+outFName = fullfile(dataBaseDir, sprintf('dictionary_%d_llc.mat', params.dictionarySize));
+save(outFName, 'B');
+    
+end

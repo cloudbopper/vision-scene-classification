@@ -17,17 +17,17 @@ params.maxImageSize = 1000;
 params.gridSpacing = 8;
 params.patchSize = 16;
 params.dictionarySize = 1024;
-params.numTextonImagesPerClass = 10;
+params.numTextonImagesPerClass = 1;
 params.k = 5; % number of nearest neighbors
 params.pyramidLevels = 3;
 params.oldSift = false;
 params.trainingSizePerClass = 100;
 % params.kernel = 'histogram_kernel';
 params.kernel = 'linear_kernel';
-params.method = 'baseline';
-% params.method = 'llc';
-params.dictionaryType = 'k-means';
-% params.dictionaryType = 'optimized';
+%params.method = 'baseline';
+params.method = 'llc';
+% params.dictionaryType = 'k-means';
+params.dictionaryType = 'optimized';
 params.lambda = 1;
 params.sigma = 1;
 canSkip = 1;
@@ -203,3 +203,8 @@ disp('Done.');
 
 % Plot confusion matrix
 confusion = generate_confusion_matrix(test_labels, predictions_svm);
+
+% save outputs
+output_filename = fullfile(data_dir, sprintf('outputs_%d_%d_%s_%s_%s.mat', ...
+    params.dictionarySize, params.pyramidLevels, params.dictionaryType, params.kernel, params.method));
+save(output_filename, 'test_labels', 'predictions_svm', 'confusion');
