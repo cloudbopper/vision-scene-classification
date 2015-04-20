@@ -2,14 +2,14 @@ function [ out ] = stringify_params( params )
 % returns values of different parameters in params stringed together
 % for unique identification
 
-arr = cell();
-arr{1} = str(params.dictionarySize);
-arr{2} = str(params.pyramidLevels);
-arr{3} = str(params.k);
-arr{4} = params.dictionaryType;
-arr{5} = params.kernel;
-arr{6} = params.method;
+arr = cell(1);
+arr{1} = num2str(params.dictionarySize);
+arr{end+1} = num2str(params.pyramidLevels);
+arr{end+1} = num2str(params.k);
+arr{end+1} = num2str(params.numTextonImagesPerClass);
+arr{end+1} = params.dictionaryType;
+arr{end+1} = params.kernel;
+arr{end+1} = params.method;
 out = strjoin(arr, '_');
 
 end
-
