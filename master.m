@@ -16,23 +16,24 @@ image_dir = fullfile(parent_dir, 'images');
 params.maxImageSize = 1000;
 params.gridSpacing = 8;
 params.patchSize = 16;
-params.dictionarySize = 1024;
-params.numTextonImagesPerClass = 1;
+params.dictionarySize = 200;
+% params.dictionarySize = 1024;
+params.numTextonImagesPerClass = 10;
 params.k = 5; % number of nearest neighbors
 params.pyramidLevels = 3;
 params.oldSift = false;
 params.trainingSizePerClass = 100;
 % params.kernel = 'histogram_kernel';
 params.kernel = 'linear_kernel';
-%params.method = 'baseline';
+% params.method = 'baseline';
 params.method = 'llc';
-% params.dictionaryType = 'k-means';
-params.dictionaryType = 'optimized';
+params.dictionaryType = 'k-means';
+% params.dictionaryType = 'optimized';
 params.lambda = 1;
 params.sigma = 10;
 canSkip = 1;
 saveSift = 1;
-pfig = sp_progress_bar('Generating SIFT Features');
+pfig = sp_progress_bar(sprintf('Scene classification: %s', stringify_params(params)));
 
 if (~exist(image_dir, 'dir'))
     preprocess_images();
@@ -103,7 +104,7 @@ elseif (strcmp(params.method, 'llc'))
     disp('Done.');
 end
 
-if (strcmp(params.method, 'histogram_kernel'))
+if (strcmp(params.kernel, 'histogram_kernel'))
     % compute histogram intersection kernel
     disp('Computing histogram intersection kernel...');
     K_fname = fullfile(data_dir, 'histogram_intersection_kernel.mat');
