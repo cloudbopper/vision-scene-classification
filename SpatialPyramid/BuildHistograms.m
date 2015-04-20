@@ -58,15 +58,9 @@ if(~exist('canSkip','var'))
 end
 %% load texton dictionary (all texton centers)
 
-if (strcmp(params.dictOpt, 'yes'))
-    inFName = fullfile(dataBaseDir, sprintf('dictionary_%d_llc.mat', params.dictionarySize));
-    load(inFName,'dictionary');
-    fprintf('Loaded optimized texton dictionary: %d textons\n', params.dictionarySize);
-else
-    inFName = fullfile(dataBaseDir, sprintf('dictionary_%d.mat', params.dictionarySize));
-    load(inFName,'dictionary');
-    fprintf('Loaded texton dictionary: %d textons\n', params.dictionarySize);
-end
+inFName = fullfile(dataBaseDir, sprintf('dictionary_%d.mat', params.dictionarySize));
+load(inFName,'dictionary');
+fprintf('Loaded texton dictionary: %d textons\n', params.dictionarySize);
 
 %% compute texton labels of patches and whole-image histograms
 H_all = [];
