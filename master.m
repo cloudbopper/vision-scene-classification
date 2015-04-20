@@ -26,7 +26,10 @@ params.trainingSizePerClass = 100;
 params.kernel = 'linear_kernel';
 % params.method = 'baseline';
 params.method = 'llc';
-params.dictOpt = 'yes';
+params.dictionaryType = 'k-means';
+% params.dictionaryType = 'optimized';
+params.lambda = 1;
+params.sigma = 1;
 canSkip = 1;
 saveSift = 1;
 pfig = sp_progress_bar('Generating SIFT Features');
@@ -70,6 +73,13 @@ disp('Done.');
 disp('Building dictionary...');
 calculate_dictionary_kmeans(image_dir, data_dir, training_data, '_sift.mat', params, canSkip, pfig);
 disp('Done.');
+
+if (strcmp(params.dictionaryType, 'optimized'))
+    % Build optimized dictionary
+    disp('Building optimized dictionary...');
+    calculate_dictionary_optimized(data_dir, training_data, '_sift.mat', params, canSkip, pfig);
+    disp('Done.');
+end
 
 if (strcmp(params.method, 'baseline'))
     % Build histogram

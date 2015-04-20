@@ -1,4 +1,4 @@
-function [ B ] = CodeBookOptimization( imageFileList, dataBaseDir, featureSuffix, params, lambda, sigma )
+function [ B ] = CodeBookOptimization( imageFileList, dataBaseDir, featureSuffix, params )
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %CodeBookOptimization: On-line learning method for codebook optimization
@@ -14,6 +14,10 @@ function [ B ] = CodeBookOptimization( imageFileList, dataBaseDir, featureSuffix
 inFName = fullfile(dataBaseDir, sprintf('dictionary_%d.mat', params.dictionarySize));
 load(inFName,'dictionary');
 fprintf('Loaded dictionary: %d codewords\n', params.dictionarySize);
+
+% load optimization parameters
+lambda = params.lambda;
+sigma = params.sigma;
 
 %Initializing to K-means dictionary, a M X D matrix
 Binit = dictionary;
