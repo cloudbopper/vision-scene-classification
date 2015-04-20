@@ -1,4 +1,4 @@
-function [ ] = calculate_dictionary_kmeans( image_dir, data_dir, training_data, featureSuffix, params, canSkip, pfig, optFlag )
+function [ ] = calculate_dictionary_kmeans( image_dir, data_dir, training_data, featureSuffix, params, canSkip, pfig )
 % calculates dictionary using k-means over subset of training data
 % assumes SIFT descriptors have been computed
 
@@ -6,7 +6,7 @@ function [ ] = calculate_dictionary_kmeans( image_dir, data_dir, training_data, 
 outFName = fullfile(data_dir, sprintf('dictionary_%d.mat', params.dictionarySize));
 if(exist(outFName,'file')~=0 && canSkip)
     fprintf('Default Dictionary file %s already exists.\n', outFName);
-    if(optFlag == 0)
+    if (strcmp(params.dictOpt, 'no'))
         return;
     else
         outFName = fullfile(data_dir, sprintf('dictionary_%d_llc.mat', params.dictionarySize));
@@ -14,6 +14,7 @@ if(exist(outFName,'file')~=0 && canSkip)
             fprintf('Optimized Dictionary file %s already exists.\n', outFName);
             return;
         else
+            disp('Performing dictionary optimization...');
             %%Optimize this later
             classes = training_data.keys;
             num_classes = numel(classes);
@@ -32,6 +33,7 @@ if(exist(outFName,'file')~=0 && canSkip)
             end
             %Obtaining new dictionary
             CodeBookOptimization( imageFileList, data_dir, featureSuffix, params, lambda, sigma );
+            disp('Done.');
         end
     end
 end
@@ -56,6 +58,8 @@ end
 
 % calculate dictionary
 CalculateDictionary(imageFileList, image_dir, data_dir, featureSuffix, params, canSkip, pfig);
-if(optFlag == 1)
+if (strcmp(params.dictOpt, 'yes'))
+    disp('Performing dictionary optimization...');
     CodeBookOptimization( imageFileList, data_dir, featureSuffix, params, lambda, sigma );
+    disp('Done.');
 end

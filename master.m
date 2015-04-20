@@ -16,7 +16,8 @@ image_dir = fullfile(parent_dir, 'images');
 params.maxImageSize = 1000;
 params.gridSpacing = 8;
 params.patchSize = 16;
-params.dictionarySize = 200;
+%params.dictionarySize = 200;
+params.dictionarySize = 1048;
 params.numTextonImagesPerClass = 10;
 params.k = 5; % number of nearest neighbors
 params.pyramidLevels = 3;
@@ -26,6 +27,7 @@ params.trainingSizePerClass = 100;
 params.kernel = 'linear_kernel';
 % params.method = 'baseline';
 params.method = 'llc';
+params.dictOpt = 'yes';
 canSkip = 1;
 saveSift = 1;
 pfig = sp_progress_bar('Generating SIFT Features');
@@ -67,7 +69,7 @@ disp('Done.');
 
 % Pool together training sets to build dictionary using k-means
 disp('Building dictionary...');
-calculate_dictionary_kmeans(image_dir, data_dir, training_data, '_sift.mat', params, canSkip, pfig);
+calculate_dictionary_kmeans(image_dir, data_dir, training_data, '_sift.mat', params, canSkip, pfig, 0);
 disp('Done.');
 
 if (strcmp(params.method, 'baseline'))
