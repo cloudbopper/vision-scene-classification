@@ -89,8 +89,10 @@ for f = 1:L
     end
 end
 
+dictionary = B;
+
 %Saving updated dictionary to a file
 outFName = fullfile(dataBaseDir, sprintf('dictionary_%d_llc.mat', params.dictionarySize));
-save(outFName, 'B');
+save(outFName, 'dictionary');
     
 end
