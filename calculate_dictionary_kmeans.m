@@ -32,7 +32,7 @@ if(exist(outFName,'file')~=0 && canSkip)
                 end
             end
             %Obtaining new dictionary
-            CodeBookOptimization( imageFileList, data_dir, featureSuffix, params, lambda, sigma );
+            CodeBookOptimization( imageFileList, data_dir, featureSuffix, params, 1, 1 );
             disp('Done.');
         end
     end
@@ -60,6 +60,6 @@ end
 CalculateDictionary(imageFileList, image_dir, data_dir, featureSuffix, params, canSkip, pfig);
 if (strcmp(params.dictOpt, 'yes'))
     disp('Performing dictionary optimization...');
-    CodeBookOptimization( imageFileList, data_dir, featureSuffix, params, lambda, sigma );
+    CodeBookOptimization( imageFileList, data_dir, featureSuffix, params, 1, 1);
     disp('Done.');
 end
