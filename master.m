@@ -24,8 +24,8 @@ params.oldSift = false;
 params.trainingSizePerClass = 100;
 % params.kernel = 'histogram_kernel';
 params.kernel = 'linear_kernel';
-% params.method = 'baseline';
-params.method = 'llc';
+params.method = 'baseline';
+% params.method = 'llc';
 params.dictionaryType = 'k-means';
 % params.dictionaryType = 'optimized';
 params.lambda = 1;
@@ -200,3 +200,6 @@ else
     error('Missing/invalid kernel specification params.kernel');
 end
 disp('Done.');
+
+% Plot confusion matrix
+confusion = generate_confusion_matrix(test_labels, predictions_svm);
