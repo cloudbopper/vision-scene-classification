@@ -38,8 +38,13 @@
                         <li><a href="training.html">Classification Pipeline</a></li>
                         <li><a href="baseline.html">Baseline Implementation and Results</a></li>
                         <li><a href="llc.html">LLC Implementation and Results</a></li>
-                        <li><a href="extension.html">Extensions</a></li>
-                        <li><a href="git.html">Git logs and credits</a></li>
+                        <li>Extensions</li>
+                        <ol>
+                            <li><a href="codebook.html">Codebook Optimization</a></li>
+                            <li><a href="grid.html">Grid Search</a></li>
+                            <li><a href="extension.html">Analysis</a></li>
+                        </ol>
+                        <li><a href="git.html">Code and credits</a></li>
                         <li><a href="reference.html">References</a></li>
                     </ul>
                 </font>
@@ -47,7 +52,7 @@
             <td>
                 <font color="#000000">
                     <div id = 'page'>
-                    <h2 style ='font-size:24px;'><center>Git logs and credits</center></h2>
+                    <h2 style ='font-size:24px;'><center>Git logs, code execution steps and credits</center></h2>
                     </div>
 
                     <h3>Source code repository link</h3> 
@@ -59,7 +64,8 @@
                         <li>First run <i>make.m</i> inside the <i>matlab</i> directory of <i>liblinear-1.96</i> and <i>libsvm-3.20</i>.</li>
                         <li>The <i>"scene_categories"</i> folder must be copied into a folder <i>"data"</i>, which has to be created; that is, the script expects this path: <i>"data/scene_categories/SUB-CATEGORY-FOLDER"</i></li>
                         <li>Set the required values in the following variables (the currently enabled values point to our best performing result) <i>params.dictionarySize, params.kernel, params.method, params.dictionaryType</i> in <i>master.m</i> - all possible values are provided on the script itself, excepting one set others will be commented out.</li>
-                        <li>Then, just execute "master.m" which would execute the require steps and provide mean accuracy and the confusion matrix.
+                        <li>Then, just execute "master.m" which would execute the require steps and provide mean accuracy and the confusion matrix.</li>
+                        <li><b><i>All code modules were written and executed in Matlab on MAC OSX.</i></b></li>
                     </ul>
 
                     <h3>Credits</h3>

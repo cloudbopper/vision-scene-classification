@@ -55,24 +55,12 @@
                     <h2 style ='font-size:24px;'><center>Extensions</center></h2>
                     </div>
                     
-                    <h3>Analysis of results</h3>
+                    <h3>Incremental Codebook Optimization</h3>
                     
-                    From the output of the grid search, we generated curves comparing the accuracy of four methods:
-                    <ol>
-                    <li>LLC with k-means codebook of size1024</li>
-                    <li>LLC with k-means codebook of size 2048</li>
-                    <li>LLC with codebook optimization ofsize 1024</li>
-                    <li>Baseline with k-means codebook of size 1024</li>
-                    </ol>
-                    The figure below depicts curves for <b>Accuracy vs number of training images per class</b>:
+                    We implemented <i>Algorithm 4.1</i> from J. Wang et al and following are our observations:<br><br> 
+                    We were able to run the code for 10 images per training class and we obtained a mean accuracy of <i><b>79.93</b></i> with parameter values <i><b>lambda</b> = 0.1</i> and <i><b>sigma</b> = 1</i>. <br><br>Shown below is the corresponding confusion matrix:</li>
                     <br><br>
-                    <img src="images/plot_accuracy_v_num_images.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 0.5em;">
-                    As expected, accuracy increases monotonically with the increase in number of training images per class. All three LLC approaches perform very similarly.
-                    <br><br>
-                    The figure below depicts curves for <b>Accuracy vs pyramid levels</b>:
-                    <br><br>
-                    <img src="images/plot_accuracy_v_pyramid_level.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 0.5em;">
-                    All approaches perform well even at the lowest pyramid level (greater than 70% accuracy), indicating that the number of training images plays a more important role than the pyramid levels. The performances of different LLC approaches are similar for pyramid level 3, but diverge for the lower pyramid levels. The optimized codebook performs better than the unoptimized codebook of the same size, but the codebook of size 2048 performs better than both. The baseline approach outperforms the LLC approaches at the lowest pyramid level.  
+                    <img src="images/optimizedLLCConfusion.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 0.5em;">
 
                 </font>
             </td>
