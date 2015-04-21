@@ -57,14 +57,15 @@
                     <br><br>To run the program:
                     <ul>
                         <li>First run <i>make.m</i> inside the <i>matlab</i> directory of <i>liblinear-1.96</i> and <i>libsvm-3.20</i>.</li>
-                        <li>Set the correct values in the following variables <i>params.dictionarySize, params.kernel, params.method, params.dictionaryType</i> in <i>master.m</i> - all possible values are provided on the script itself, excepting one set others will be commented out.</li>
+                        <li>The <i>"scene_categories"</i> folder must be copied into a folder <i>"data"</i>, which has to be created; that is, the script expects this path: <i>"data/scene_categories/SUB-CATEGORY-FOLDER"</i></li>
+                        <li>Set the required values in the following variables (the currently enabled values point to our best performing result) <i>params.dictionarySize, params.kernel, params.method, params.dictionaryType</i> in <i>master.m</i> - all possible values are provided on the script itself, excepting one set others will be commented out.</li>
                         <li>Then, just execute "master.m" which would execute the require steps and provide mean accuracy and the confusion matrix.
                     </ul>
 
                     <h3>Credits</h3>
                     <ul>
-                        <li>Baseline and LLC piplines, grid computation - Akshay</li>
-                        <li>LLC code optimization, confusion matrix generation, document write up - Meena</li>
+                        <li>SVM setup, Baseline pipeline and LLC pipline, grid computation - Akshay</li>
+                        <li>LLC code optimization, confusion matrix generation, document write up, grid computation - Meena</li>
                     </ul>
 
                     Even though specific components were handled predominantly individually, most of the work for this project was a combined effort and was executed together.
