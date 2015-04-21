@@ -153,7 +153,7 @@ if (strcmp(params.kernel, 'histogram_kernel'))
     % save(sprintf('svm_model_%s_%d_%d_%d.mat', params.kernel, ...
     %    params.dictionarySize, params.pyramidLevels, params.k), 'model_svm', 'params');
 elseif (strcmp(params.kernel, 'linear_kernel'))
-    model_libl = train(training_labels, sparse(training_set), '');
+    % model_libl = train(training_labels, sparse(training_set), '');
     model_svm = svmtrain(training_labels, training_set, '-t 0');
 else
     error('Missing/invalid kernel specification params.kernel');
@@ -165,8 +165,8 @@ disp('Classifying using learned SVM...');
 if (strcmp(params.kernel, 'histogram_kernel'))
     [predictions_svm, accuracy_svm, prob_estimates_svm] = svmpredict(test_labels, test_set, model_svm, '');
 elseif (strcmp(params.kernel, 'linear_kernel'))
-    disp('Using liblinear:');
-    [predictions_libl, accuracy_libl, prob_estimates_libl] = predict(test_labels, sparse(test_set), model_libl, '');
+    % disp('Using liblinear:');
+    % [predictions_libl, accuracy_libl, prob_estimates_libl] = predict(test_labels, sparse(test_set), model_libl, '');
     disp('Using libsvm:');
     [predictions_svm, accuracy_svm, prob_estimates_svm] = svmpredict(test_labels, test_set, model_svm, '');
 else
