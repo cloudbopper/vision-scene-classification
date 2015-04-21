@@ -10,7 +10,7 @@
         <tr align=center>
             <td colspan=2>
                 <font color="#000000">
-                    <div id='page' style='width: 600px'>                                                                                                      
+                    <div id='page' style='width: 600px'>
                         <h1 style='font-size:32px;'>Assignment 3: Locality-constrained Linear Coding for Scene Classification</h1>
                     </div>
                     Akshay Sood(<a href="mailto:sood@cs.wisc.ed">sood@cs.wisc.edu</a>), Meenakshi Syamkumar (<a href="mailto:ms@cs.wisc.ed">ms@cs.wisc.edu</a>)
@@ -44,28 +44,29 @@
                             <li><a href="grid.html">Grid Search</a></li>
                             <li><a href="extension.html">Analysis</a></li>
                         </ol>
-                        <li><a href="git.html">Code and credits</a></li>
-                        <li><a href="reference.html">References</a></li>
+                        <li><a href="git.html">Code and credits</a></li>                        
+                        <li><a href="reference.html">References</a></li>  
                     </ul>
                 </font>
             </td>
             <td>
                 <font color="#000000">
                     <div id = 'page'>
-                    <h2 style ='font-size:24px;'><center>Goal</center></h2>
+                    <h2 style ='font-size:24px;'><center>Extensions</center></h2>
                     </div>
-                    The aim of this assignment is to perform image classification of different natural scene categories by using two methods: a baseline method with spatial pyramid features and SVM classification (using histogram intersection kernel) and the LLC method with locality-constrained linear coding, max-pooling and SVM classification (using linear kernel).  <br> <br>
-                    <img src="images/bedroom.jpg" style="float: left; width: 19%; margin-right: 1%; margin-bottom: 0.5em;" height = "128">
-                    <img src="images/coast.jpg" style="float: left; width: 19%; margin-right: 1%; margin-bottom: 0.5em;">
-                    <img src="images/highway.jpg" style="float: left; width: 19%; margin-right: 1%; margin-bottom: 0.5em;">
-                    <img src="images/mountain.jpg" style="float: left; width: 19%; margin-right: 1%; margin-bottom: 0.5em;">
-                    <img src="images/store.jpg" style="float: left; width: 19%; margin-right: 1%; margin-bottom: 0.5em;" height = "128">
-                    <p style="clear: both;">
+                    
+                    <h3>Incremental Codebook Optimization</h3>
+                    
+                    We implemented <i>Algorithm 4.1</i> from J. Wang et al.<br><br> 
+                    We used 10 images per class to build the dictionary and we obtained a mean accuracy of <i><b>79.93</b></i> with parameter values <i><b>lambda</b> = 0.1</i> and <i><b>sigma</b> = 1</i>. <br><br>Shown below is the corresponding confusion matrix:</li>
+                    <br><br>
+                    <img src="images/optimizedLLCConfusion.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 0.5em;">
+
                 </font>
             </td>
         </tr>
     </table>
-</center>
-
+    </center>
 <body>
 </html>
+

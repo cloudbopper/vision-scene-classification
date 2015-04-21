@@ -38,8 +38,13 @@
                         <li><a href="training.html">Classification Pipeline</a></li>
                         <li><a href="baseline.html">Baseline Implementation and Results</a></li>
                         <li><a href="llc.html">LLC Implementation and Results</a></li>
-                        <li><a href="extension.html">Extensions</a></li>
-                        <li><a href="git.html">Git logs and credits</a></li>                        
+                        <li>Extensions</li>
+                        <ol>
+                            <li><a href="codebook.html">Codebook Optimization</a></li>
+                            <li><a href="grid.html">Grid Search</a></li>
+                            <li><a href="extension.html">Analysis</a></li>
+                        </ol>
+                        <li><a href="git.html">Code and credits</a></li>                        
                         <li><a href="reference.html">References</a></li>  
                     </ul>
                 </font>
@@ -50,18 +55,24 @@
                     <h2 style ='font-size:24px;'><center>Extensions</center></h2>
                     </div>
                     
-                    <h3>Incremental Codebook Optimization</h3>
+                    <h3>Analysis of results</h3>
                     
-                    We implemented <i>Algorithm 4.1</i> from J. Wang et al and following are our observations:<br><br> 
-                    We were able to run the code for 10 images per training class and we obtained a mean accuracy of <i><b>79.93</b></i> with parameter values <i><b>lambda</b> = 1</i> and <i><b>sigma</b> = 1</i>. <br><br>Shown below is the corresponding confusion matrix:</li>
+                    From the output of the grid search, we generated curves comparing the accuracy of four methods:
+                    <ol>
+                    <li>LLC with k-means codebook of size1024</li>
+                    <li>LLC with k-means codebook of size 2048</li>
+                    <li>LLC with codebook optimization of size 1024</li>
+                    <li>Baseline with k-means codebook of size 1024</li>
+                    </ol>
+                    The figure below depicts curves for <b>Accuracy vs number of training images per class</b>:
                     <br><br>
-                    <img src="images/optimizedLLCConfusion.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 0.5em;">
-                    
-                    <h3>Thorough evaluation of parameters using grid search</h3>
-
-                    We implemented a function <i>grid_search.m</i> which takes as inputs the possible parameter values for: <i>dictionary type, dictionary size, pyramid levels, number of training images</i> as a list and generates all possible permutations.
+                    <img src="images/plot_accuracy_v_num_images.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 0.5em;">
+                    As expected, accuracy increases monotonically with the increase in number of training images per class. All three LLC approaches perform very similarly and better than the baseline.
                     <br><br>
-                    Following our the results of our grid search:
+                    The figure below depicts curves for <b>Accuracy vs pyramid levels</b>:
+                    <br><br>
+                    <img src="images/plot_accuracy_v_pyramid_level.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 0.5em;">
+                    All approaches perform well even at the lowest pyramid level (greater than 70% accuracy), indicating that the number of training images plays a more important role than the pyramid levels. The performances of different LLC approaches are similar for pyramid level 3, but diverge for the lower pyramid levels. The optimized codebook performs better than the unoptimized codebook of the same size, but the codebook of size 2048 performs better than both. The baseline approach outperforms the LLC approaches at the lowest pyramid level.  
 
                 </font>
             </td>
