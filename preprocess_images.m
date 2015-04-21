@@ -5,11 +5,12 @@ disp('Preprocessing images...');
 source_dir = 'data/scene_categories/';
 image_dir = 'data/images';
 data_dir = 'data/data';
-mkdir(image_dir);
-mkdir(data_dir);
 
 % hash from class to image filenames
 all_images = get_images(source_dir);
+
+mkdir(image_dir);
+mkdir(data_dir);
 
 classes = all_images.keys;
 num_classes = numel(classes);
