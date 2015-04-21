@@ -48,6 +48,6 @@ plot(M(idx3, 1), M(idx3, 4), 'go-');
 plot(M(idx4, 1), M(idx4, 4), 'kx-');
 legend('LLC with k-means codebook, size = 1024', 'LLC with k-means codebook, size = 2048', ...
     'LLC with optimized codebook, size = 1024', 'Baseline with k-means codebook, size = 1024');
-title('Accuracy vs number of training images (100 training images per class)');
+title('Accuracy vs pyramid levels (100 training images per class)');
 xlabel('Pyramid levels');
 ylabel('Accuracy');
